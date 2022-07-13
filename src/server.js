@@ -4,8 +4,7 @@ import morgan from 'morgan';
 import fs from 'fs';
 import path from 'path';
 require('./models/index')
-//import routes from './routes';
-//import { isAuthenticated } from './utils/isAuthenticated';
+import routes from './routes/index';
 
 const app = express();
 
@@ -18,13 +17,12 @@ app.use(morgan('combined', { stream: accessLogStream }));
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-app.get('/usuario', async (req, res) => {
-    Usuario.create({
-        username: 'kunzgabriel',
-        password: '12345'
-    })
+routes(app);
+app.use((req, res) => {
+    res.status(404).send('Pagina não encontrada');
 });
 
-app.listen(3000, () => {
-  console.log(`Example app listening on port 3000!`);
+const port = 3000
+app.listen(port, () => {
+  console.log(`Servidor rodando na porta ${port}!`);
 });
