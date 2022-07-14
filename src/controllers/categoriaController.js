@@ -1,1 +1,0 @@
-import Categoria from "../models/Categoria";

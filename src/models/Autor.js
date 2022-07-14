@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/config";
 
-const Categoria = sequelize.define(
-	'categorias',
+const Autor = sequelize.define(
+	'autores',
 	{
 		id: {
 			type: DataTypes.INTEGER,
@@ -13,6 +13,11 @@ const Categoria = sequelize.define(
 			type: DataTypes.STRING(200),
 			unique: true,
 			allowNull: false
+		},
+		email: {
+				type: DataTypes.STRING(200),
+				unique: true,
+				allowNull: false
 		}
 	},
 	{
@@ -23,4 +28,4 @@ const Categoria = sequelize.define(
 	}
 );
 
-export default Categoria;
+export default Autor;

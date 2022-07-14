@@ -3,8 +3,8 @@ import express from 'express';
 import morgan from 'morgan';
 import fs from 'fs';
 import path from 'path';
-require('./models/index')
-import routes from './routes/index';
+import routes from './routes';
+require('./models/index');
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 routes(app);
 
 app.use((req, res) => {
-  res.status(404).send('Pagina não encontrada');
+  res.status(404).send('404 - Página não encontrada')
 });
 
 const port = 3000
