@@ -50,11 +50,6 @@ const getLivros = async (req, res) => {
 
 }
 
-// titulo
-//   * sinopse
-//   * emprestado (boolean)
-//   * idCategoria BelongsTo(Categorias)
-//   * idAutor
 const persistir = async (req, res) => {
   try {
     let { id } = req.body;

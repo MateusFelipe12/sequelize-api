@@ -2,11 +2,11 @@ import { Sequelize } from "sequelize";
 import 'dotenv/config';
 
 export const sequelize = new Sequelize(
-  process.env.POSTGRES_DB,
-  process.env.POSTEGRES_USERNAME,
-  process.env.POSTEGRES_PASSWORD,
+  'sequelize-api',
+  'postgres',
+  '88725291',
   {
-    host: process.env.POSTEGRES_HOST,
+    host: 'localhost',
     dialect: 'postgres'
   }
 );
