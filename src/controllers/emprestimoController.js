@@ -179,7 +179,9 @@ const deletar = async (req, res) => {
 
 const livroEmprestado = async (req, res) => {
 try {
+  console.log(req.body);
   let { idLivro } = req.body
+
   idLivro = idLivro ? idLivro.toString().replace(/\D/g, '') : null;
 
   let livros = await Livro.findOne({
@@ -189,14 +191,19 @@ try {
   });
 
   if(!livros){
-    return res.status(400).send({
-      message: `nao existe um livro com o id ${idLivro}`
+    return res.status(200).send({
+      message: `nao existe um livro com o id ${idLivro}`,
+      error: true
     })
   } 
   
   let response = livros.toJSON()
 
-  response.emprestimo = await livros.getEmprestimos()
+  response.emprestimo = await livros.getEmprestimos({
+    where: {
+      devolucao: null
+    }
+  })
 
   response = response.emprestimo[0] ? response.emprestimo[0].dataValues : null;
 
@@ -267,89 +274,3 @@ export default {
   livroEmprestado,
   emprestimosLivro
 };
-// let res = [
-//   emprestimos {
-//     dataValues: {
-//       id: 8,
-//       prazo: '2022-07-30',
-//       devolucao: '2022-07-15',
-//       created_at: 2022-07-15T18:22:27.038Z,
-//       updated_at: 2022-07-15T21:07:25.448Z,
-//       idUsuario: 1,
-//       emprestimo_livros: [emprestimo_livros]
-//     },
-//     _previousDataValues: {
-//       id: 8,
-//       prazo: '2022-07-30',
-//       devolucao: '2022-07-15',
-//       created_at: 2022-07-15T18:22:27.038Z,
-//       updated_at: 2022-07-15T21:07:25.448Z,
-//       idUsuario: 1,
-//       emprestimo_livros: [emprestimo_livros]
-//     },
-//     uniqno: 1,
-//     _changed: Set(0) {},
-//     _options: {
-//       isNewRecord: false,
-//       _schema: null,
-//       _schemaDelimiter: '',
-//       include: [Array],
-//       includeNames: [Array],
-//       includeMap: [Object],
-//       includeValidated: true,
-//       attributes: [Array],
-//       raw: true
-//     },
-//     isNewRecord: false,
-//     emprestimo_livros: emprestimo_livros {
-//       dataValues: [Object],
-//       _previousDataValues: [Object],
-//       uniqno: 1,
-//       _changed: Set(0) {},
-//       _options: [Object],
-//       isNewRecord: false
-//     }
-//   },
-//   emprestimos {
-//     dataValues: {
-//       id: 12,
-//       prazo: '2022-07-30',
-//       devolucao: null,
-//       created_at: 2022-07-15T21:07:36.955Z,
-//       updated_at: 2022-07-15T21:07:36.955Z,
-//       idUsuario: 1,
-//       emprestimo_livros: [emprestimo_livros]
-//     },
-//     _previousDataValues: {
-//       id: 12,
-//       prazo: '2022-07-30',
-//       devolucao: null,
-//       created_at: 2022-07-15T21:07:36.955Z,
-//       updated_at: 2022-07-15T21:07:36.955Z,
-//       idUsuario: 1,
-//       emprestimo_livros: [emprestimo_livros]
-//     },
-//     uniqno: 1,
-//     _changed: Set(0) {},
-//     _options: {
-//       isNewRecord: false,
-//       _schema: null,
-//       _schemaDelimiter: '',
-//       include: [Array],
-//       includeNames: [Array],
-//       includeMap: [Object],
-//       includeValidated: true,
-//       attributes: [Array],
-//       raw: true
-//     },
-//     isNewRecord: false,
-//     emprestimo_livros: emprestimo_livros {
-//       dataValues: [Object],
-//       _previousDataValues: [Object],
-//       uniqno: 1,
-//       _changed: Set(0) {},
-//       _options: [Object],
-//       isNewRecord: false
-//     }
-//   }
-// ]
