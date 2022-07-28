@@ -110,8 +110,9 @@ const create = async (dados, res) => {
     if (livroEmprestado[1].rowCount) {
       await emprestimo.destroy();
       livroEmprestado = livroEmprestado[0][0] ? livroEmprestado[0][0].id : '';
-      return res.status(400).send({
-        message: `O livro id ${livros[index]} já está emprestado no empréstimo ${livroEmprestado}. O empréstimo não foi salvo!!`
+      return res.status(200).send({
+        message: `O livro id ${livros[index]} já está emprestado no empréstimo ${livroEmprestado}. O empréstimo não foi salvo!!`,
+        error: true
       })
     };
 
